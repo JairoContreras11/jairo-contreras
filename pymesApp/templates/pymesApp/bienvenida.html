@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ nombre_proyecto }}</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #eef2f5 0%, #dfe6ec 100%);
+            margin: 0;
+            padding: 40px 20px;
+            color: #24303d;
+            min-height: 100vh;
+        }
+        .topbar {
+            max-width: 760px;
+            margin: 0 auto 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            background: #1b3a57;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .marca {
+            font-size: 13px;
+            letter-spacing: 1px;
+            color: #5b6b7a;
+            text-transform: uppercase;
+        }
+        .contenedor {
+            max-width: 760px;
+            margin: 15px auto 0;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 36px 44px;
+            box-shadow: 0 4px 18px rgba(27, 58, 87, 0.12);
+            border-top: 4px solid #1b3a57;
+        }
+        .saludo {
+            color: #8a97a3;
+            margin: 0 0 4px;
+            font-size: 14px;
+        }
+        h1 {
+            color: #1b3a57;
+            margin: 0 0 14px;
+            font-size: 28px;
+        }
+        p.descripcion {
+            line-height: 1.6;
+            color: #3d4a56;
+        }
+        .estado {
+            display: inline-block;
+            background: #e8f0f9;
+            color: #1b3a57;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+        }
+        h3 {
+            font-size: 15px;
+            color: #1b3a57;
+            border-bottom: 1px solid #e5e9ed;
+            padding-bottom: 6px;
+            margin-top: 28px;
+        }
+        .barra-fondo {
+            background: #e5e9ed;
+            border-radius: 6px;
+            height: 14px;
+            overflow: hidden;
+            margin: 10px 0 4px;
+        }
+        .barra-progreso {
+            background: #1b3a57;
+            height: 100%;
+            /* width: {{ avance_porcentual }}%; */
+            transition: width 0.4s ease;
+        }
+        .porcentaje-texto {
+            font-size: 12px;
+            color: #8a97a3;
+        }
+        ul.modulos {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        ul.modulos li {
+            background: #f5f7f9;
+            border-left: 3px solid #1b3a57;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .nota {
+            margin-top: 26px;
+            font-size: 12px;
+            color: #a3adb6;
+            border-top: 1px dashed #e5e9ed;
+            padding-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="logo">PY</div>
+        <div class="marca">INACAP · Programación Back End</div>
+    </div>
+
+    <div class="contenedor">
+        <p class="saludo">{{ saludo }}</p>
+        <span class="estado">Proyecto en desarrollo</span>
+        <h1>{{ nombre_proyecto }}</h1>
+        <p class="descripcion">
+            Plataforma orientada a pequeñas y medianas empresas para gestionar
+            su inventario: productos, stock y categorías, facilitando la toma
+            de decisiones del negocio.
+        </p>
+
+        <h3>Avance general</h3>
+        <div class="barra-fondo">
+            <div class="barra-progreso"></div>
+        </div>
+        <p class="porcentaje-texto">{{ avance_porcentual }}% completado</p>
+
+        <h3>Módulos planificados</h3>
+        <ul class="modulos">
+            {% for modulo in modulos_planificados %}
+                <li>{{ modulo }}</li>
+            {% endfor %}
+        </ul>
+
+        <p class="nota">
+            Etapa actual: núcleo del proyecto Django, rutas propias y página
+            de bienvenida. El modelo de datos y la persistencia se
+            incorporarán en la siguiente evaluación.
+        </p>
+    </div>
+</body>
+</html>
