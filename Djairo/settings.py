@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'jai.urls'
+ROOT_URLCONF = 'Djairo.urls'
 
 TEMPLATES = [
     {
@@ -67,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'jai.wsgi.application'
+WSGI_APPLICATION = 'Djairo.wsgi.application'
 
 
 # Database
