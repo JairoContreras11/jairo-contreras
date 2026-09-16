@@ -77,8 +77,12 @@ class MovimientoInventario(models.Model):
         return f"{self.tipo} - {self.producto.nombre} ({self.cantidad})"
 
     def save(self, *args, **kwargs):
-        # Actualiza el stock del producto según el tipo de movimiento
-        if self.pk is None:  # solo al crear, no al editar
+        # Actualiza el stock del producto según el tipo de movimiento.
+        # kwargs['raw'] es True cuando los datos vienen de un fixture
+        # (loaddata); en ese caso el stock ya viene correcto en el JSON
+        # y no debe recalcularse.
+        es_carga_de_fixture = kwargs.get("raw", False)
+        if self.pk is None and not es_carga_de_fixture:
             if self.tipo == self.ENTRADA:
                 self.producto.stock += self.cantidad
             elif self.tipo == self.SALIDA:

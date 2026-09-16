@@ -1,0 +1,71 @@
+[
+  {
+    "model": "pymesApp.categoria",
+    "pk": 1,
+    "fields": {"nombre": "Abarrotes", "descripcion": "Productos basicos de almacen"}
+  },
+  {
+    "model": "pymesApp.categoria",
+    "pk": 2,
+    "fields": {"nombre": "Aseo", "descripcion": "Productos de limpieza e higiene"}
+  },
+  {
+    "model": "pymesApp.categoria",
+    "pk": 3,
+    "fields": {"nombre": "Bebidas", "descripcion": "Bebidas y jugos"}
+  },
+
+  {
+    "model": "pymesApp.proveedor",
+    "pk": 1,
+    "fields": {"nombre": "Distribuidora Sur Ltda", "rut": "76123456-7", "telefono": "+56912345678", "correo": "contacto@disur.cl", "direccion": "Temuco, Chile"}
+  },
+  {
+    "model": "pymesApp.proveedor",
+    "pk": 2,
+    "fields": {"nombre": "Comercial Andina SpA", "rut": "77654321-0", "telefono": "+56987654321", "correo": "ventas@andina.cl", "direccion": "Temuco, Chile"}
+  },
+
+  {
+    "model": "pymesApp.cliente",
+    "pk": 1,
+    "fields": {"nombre": "Minimarket Don Pedro", "rut": "12345678-9", "telefono": "+56911112222", "correo": "donpedro@correo.cl"}
+  },
+  {
+    "model": "pymesApp.cliente",
+    "pk": 2,
+    "fields": {"nombre": "Almacen La Esquina", "rut": "98765432-1", "telefono": "+56933334444", "correo": "laesquina@correo.cl"}
+  },
+
+  {
+    "model": "pymesApp.producto",
+    "pk": 1,
+    "fields": {"nombre": "Arroz 1kg", "categoria": 1, "proveedor": 1, "precio": "1200.00", "stock": 50, "stock_minimo": 10}
+  },
+  {
+    "model": "pymesApp.producto",
+    "pk": 2,
+    "fields": {"nombre": "Detergente 3L", "categoria": 2, "proveedor": 2, "precio": "4500.00", "stock": 15, "stock_minimo": 5}
+  },
+  {
+    "model": "pymesApp.producto",
+    "pk": 3,
+    "fields": {"nombre": "Bebida Cola 2L", "categoria": 3, "proveedor": 1, "precio": "1600.00", "stock": 8, "stock_minimo": 10}
+  },
+  {
+    "model": "pymesApp.producto",
+    "pk": 4,
+    "fields": {"nombre": "Jabon de Manos", "categoria": 2, "proveedor": 2, "precio": "900.00", "stock": 3, "stock_minimo": 5}
+  },
+
+  {
+    "model": "pymesApp.movimientoinventario",
+    "pk": 1,
+    "fields": {"producto": 1, "cliente": null, "tipo": "entrada", "cantidad": 50, "observacion": "Compra inicial a proveedor"}
+  },
+  {
+    "model": "pymesApp.movimientoinventario",
+    "pk": 2,
+    "fields": {"producto": 3, "cliente": 1, "tipo": "salida", "cantidad": 12, "observacion": "Venta a Minimarket Don Pedro"}
+  }
+]
