@@ -1,0 +1,21 @@
+# Entornos virtuales
+.venv/
+ambiente/
+env/
+venv/
+ENV/
+
+# Variables de entorno confidenciales
+.env
+
+# Base de datos SQLite
+*.sqlite3
+
+# Python cache y compilados
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Logs
+*.log
