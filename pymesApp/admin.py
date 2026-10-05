@@ -22,7 +22,7 @@ class ClienteAdmin(admin.ModelAdmin):
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
-    list_display = ("nombre", "categoria", "proveedor", "precio", "stock", "stock_bajo")
+    list_display = ("nombre", "categoria", "proveedor", "precio_estimado", "stock", "stock_bajo")
     list_filter = ("categoria", "proveedor")
     search_fields = ("nombre",)
 
