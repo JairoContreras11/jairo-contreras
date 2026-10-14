@@ -1,4 +1,14 @@
-"""
-Enrutamiento global motor_django reexportando desde Djairo.urls.
-"""
-from Djairo.urls import urlpatterns, handler404
+from django.contrib import admin
+from django.urls import path, include
+from django.contrib.auth import views as auth_views
+from api import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.bienvenida, name='bienvenida'),
+    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('dashboard/', views.dashboard_privado, name='dashboard'),
+    path('inventario/', views.GestionProductosPrivadaView.as_view(), name='gestion_productos'),
+    path('api/', include('api.urls')),
+]
