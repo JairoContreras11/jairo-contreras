@@ -1,158 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ nombre_proyecto }}</title>
-    <style>
-        * { box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #eef2f5 0%, #dfe6ec 100%);
-            margin: 0;
-            padding: 40px 20px;
-            color: #24303d;
-            min-height: 100vh;
-        }
-        .topbar {
-            max-width: 760px;
-            margin: 0 auto 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .logo {
-            width: 42px;
-            height: 42px;
-            border-radius: 8px;
-            background: #1b3a57;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .marca {
-            font-size: 13px;
-            letter-spacing: 1px;
-            color: #5b6b7a;
-            text-transform: uppercase;
-        }
-        .contenedor {
-            max-width: 760px;
-            margin: 15px auto 0;
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 36px 44px;
-            box-shadow: 0 4px 18px rgba(27, 58, 87, 0.12);
-            border-top: 4px solid #1b3a57;
-        }
-        .saludo {
-            color: #8a97a3;
-            margin: 0 0 4px;
-            font-size: 14px;
-        }
-        h1 {
-            color: #1b3a57;
-            margin: 0 0 14px;
-            font-size: 28px;
-        }
-        p.descripcion {
-            line-height: 1.6;
-            color: #3d4a56;
-        }
-        .estado {
-            display: inline-block;
-            background: #e8f0f9;
-            color: #1b3a57;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-bottom: 18px;
-        }
-        h3 {
-            font-size: 15px;
-            color: #1b3a57;
-            border-bottom: 1px solid #e5e9ed;
-            padding-bottom: 6px;
-            margin-top: 28px;
-        }
-        .barra-fondo {
-            background: #e5e9ed;
-            border-radius: 6px;
-            height: 14px;
-            overflow: hidden;
-            margin: 10px 0 4px;
-        }
-        .barra-progreso {
-            background: #1b3a57;
-            height: 100%;
-            /* width: {{ avance_porcentual }}%; */
-            transition: width 0.4s ease;
-        }
-        .porcentaje-texto {
-            font-size: 12px;
-            color: #8a97a3;
-        }
-        ul.modulos {
-            list-style: none;
-            padding: 0;
-            margin: 12px 0 0;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-        ul.modulos li {
-            background: #f5f7f9;
-            border-left: 3px solid #1b3a57;
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .nota {
-            margin-top: 26px;
-            font-size: 12px;
-            color: #a3adb6;
-            border-top: 1px dashed #e5e9ed;
-            padding-top: 12px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Sistema de Inventario para PYMEs | Bienvenido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="topbar">
-        <div class="logo">PY</div>
-        <div class="marca">INACAP · Programación Back End</div>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between">
+  <header class="border-b border-slate-800/80 bg-slate-900/50 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-sm bg-indigo-500"></span>
+        <span class="font-bold text-white tracking-tight">StockFlow PYME</span>
+      </div>
+      <div>
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2 rounded-lg transition-all">
+            Ir al Dashboard
+          </a>
+        {% else %}
+          <a href="{% url 'login' %}" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2 rounded-lg transition-all shadow-lg shadow-indigo-600/20">
+            Iniciar Sesión
+          </a>
+        {% endif %}
+      </div>
     </div>
+  </header>
 
-    <div class="contenedor">
-        <p class="saludo">{{ saludo }}</p>
-        <span class="estado">Proyecto en desarrollo</span>
-        <h1>{{ nombre_proyecto }}</h1>
-        <p class="descripcion">
-            Plataforma orientada a pequeñas y medianas empresas para gestionar
-            su inventario: productos, stock y categorías, facilitando la toma
-            de decisiones del negocio.
-        </p>
-
-        <h3>Avance general</h3>
-        <div class="barra-fondo">
-            <div class="barra-progreso"></div>
-        </div>
-        <p class="porcentaje-texto">{{ avance_porcentual }}% completado</p>
-
-        <h3>Módulos planificados</h3>
-        <ul class="modulos">
-            {% for modulo in modulos_planificados %}
-                <li>{{ modulo }}</li>
-            {% endfor %}
-        </ul>
-
-        <p class="nota">
-            Etapa actual: núcleo del proyecto Django, rutas propias y página
-            de bienvenida. El modelo de datos y la persistencia se
-            incorporarán en la siguiente evaluación.
-        </p>
+  <main class="max-w-4xl mx-auto px-6 py-20 text-center flex-1 flex flex-col justify-center items-center">
+    <span class="px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono uppercase tracking-wider mb-6">
+      Gestión Centralizada y Trazabilidad Operativa
+    </span>
+    <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+      Control de Inventario y Auditoría para Empresas PYME
+    </h1>
+    <p class="text-slate-400 text-sm md:text-base mt-4 max-w-2xl">
+      Plataforma integral para centralizar existencias de productos, auditar entradas y salidas con usuarios responsables y monitorear el quiebre de stock en tiempo real mediante API REST y paneles dedicados.
+    </p>
+    <div class="mt-8 flex gap-4">
+      <a href="{% url 'login' %}" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-semibold text-white text-sm transition-all shadow-xl shadow-indigo-600/25">
+        Ingresar al Portal de Inventario
+      </a>
+      <a href="/api/" class="px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 font-semibold text-slate-300 text-sm transition-all">
+        Explorar Endpoints REST
+      </a>
     </div>
+  </main>
+
+  <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-600">
+    Evaluación N.° 3 · Arquitectura de Software Django & DRF
+  </footer>
 </body>
 </html>

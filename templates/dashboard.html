@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Gerencial | Inventario PYME</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+  <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <span class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+          <span class="w-3 h-3 rounded-sm bg-indigo-500"></span> StockFlow <span class="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 font-mono">PYME</span>
+        </span>
+        <span class="text-xs px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono">
+          FBV: @login_required
+        </span>
+      </div>
+      <div class="flex items-center gap-6">
+        <span class="text-xs text-slate-400">Operador: <strong class="text-slate-200">{{ usuario.username }}</strong></span>
+        <a href="{% url 'gestion_productos' %}" class="text-xs text-slate-300 hover:text-indigo-400 transition-colors">Catálogo Operativo (CBV)</a>
+        <a href="/api/" target="_blank" class="text-xs text-slate-300 hover:text-indigo-400 transition-colors">API REST</a>
+        <form method="post" action="{% url 'logout' %}" class="inline">
+          {% csrf_token %}
+          <button type="submit" class="text-xs bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-rose-400 px-3 py-1.5 rounded-lg transition-colors">
+            Cerrar Sesión
+          </button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-8 flex-1 w-full space-y-8">
+    <div>
+      <h1 class="text-2xl font-bold text-white tracking-tight">Indicadores de Inventario y Auditoría</h1>
+      <p class="text-xs text-slate-400 mt-1">Métricas de stock, alertas operativas y registros de movimientos transaccionales.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+        <p class="text-xs font-mono uppercase text-slate-400">Total Ítems en Catálogo</p>
+        <p class="text-3xl font-extrabold text-white mt-2">{{ total_productos }}</p>
+        <p class="text-xs text-slate-500 mt-1">Líneas de productos activas</p>
+      </div>
+      <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+        <p class="text-xs font-mono uppercase text-amber-400">Alertas de Stock Crítico</p>
+        <p class="text-3xl font-extrabold text-amber-400 mt-2">{{ productos_criticos }}</p>
+        <p class="text-xs text-slate-500 mt-1">Por debajo del stock mínimo de reposición</p>
+      </div>
+      <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+        <p class="text-xs font-mono uppercase text-emerald-400">Valorización Estimada de Bodega</p>
+        <p class="text-3xl font-extrabold text-emerald-400 mt-2">${{ valor_inventario|floatformat:2 }}</p>
+        <p class="text-xs text-slate-500 mt-1">Stock actual × Precio unitario</p>
+      </div>
+    </div>
+
+    <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-base font-bold text-white">Últimos Movimientos de Auditoría</h2>
+        <span class="text-xs font-mono text-slate-500">Historial transaccional</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+          <thead class="text-slate-400 border-b border-slate-800 font-mono uppercase text-[11px]">
+            <tr>
+              <th class="py-3 px-4">Fecha/Hora</th>
+              <th class="py-3 px-4">Tipo</th>
+              <th class="py-3 px-4">Producto</th>
+              <th class="py-3 px-4">Cantidad</th>
+              <th class="py-3 px-4">Stock Resultante</th>
+              <th class="py-3 px-4">Responsable</th>
+              <th class="py-3 px-4">Motivo</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/80">
+            {% for mov in ultimos_movimientos %}
+            <tr class="hover:bg-slate-800/20">
+              <td class="py-3 px-4 font-mono text-slate-400">{{ mov.fecha_registro|date:"d/m/Y H:i" }}</td>
+              <td class="py-3 px-4">
+                <span class="px-2 py-0.5 rounded-full font-semibold {% if mov.tipo_movimiento == 'ENTRADA' %}bg-emerald-500/10 text-emerald-400 border border-emerald-500/20{% elif mov.tipo_movimiento == 'SALIDA' %}bg-rose-500/10 text-rose-400 border border-rose-500/20{% else %}bg-indigo-500/10 text-indigo-400 border border-indigo-500/20{% endif %}">
+                  {{ mov.tipo_movimiento }}
+                </span>
+              </td>
+              <td class="py-3 px-4 font-semibold text-white">{{ mov.producto.nombre }}</td>
+              <td class="py-3 px-4 font-mono">{{ mov.cantidad }} un.</td>
+              <td class="py-3 px-4 font-mono font-bold text-white">{{ mov.stock_resultante }} un.</td>
+              <td class="py-3 px-4 font-mono text-slate-400">{{ mov.usuario.username }}</td>
+              <td class="py-3 px-4 text-slate-400">{{ mov.motivo }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7" class="py-6 text-center text-slate-500">No hay movimientos de auditoría registrados.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

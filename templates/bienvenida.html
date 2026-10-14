@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema de Inventario para PYMEs | Bienvenido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between">
+  <header class="border-b border-slate-800/80 bg-slate-900/50 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-sm bg-indigo-500"></span>
+        <span class="font-bold text-white tracking-tight">StockFlow PYME</span>
+      </div>
+      <div>
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2 rounded-lg transition-all">
+            Ir al Dashboard
+          </a>
+        {% else %}
+          <a href="{% url 'login' %}" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2 rounded-lg transition-all shadow-lg shadow-indigo-600/20">
+            Iniciar Sesión
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-6 py-20 text-center flex-1 flex flex-col justify-center items-center">
+    <span class="px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono uppercase tracking-wider mb-6">
+      Gestión Centralizada y Trazabilidad Operativa
+    </span>
+    <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+      Control de Inventario y Auditoría para Empresas PYME
+    </h1>
+    <p class="text-slate-400 text-sm md:text-base mt-4 max-w-2xl">
+      Plataforma integral para centralizar existencias de productos, auditar entradas y salidas con usuarios responsables y monitorear el quiebre de stock en tiempo real mediante API REST y paneles dedicados.
+    </p>
+    <div class="mt-8 flex gap-4">
+      <a href="{% url 'login' %}" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-semibold text-white text-sm transition-all shadow-xl shadow-indigo-600/25">
+        Ingresar al Portal de Inventario
+      </a>
+      <a href="/api/" class="px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 font-semibold text-slate-300 text-sm transition-all">
+        Explorar Endpoints REST
+      </a>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-600">
+    Evaluación N.° 3 · Arquitectura de Software Django & DRF
+  </footer>
+</body>
+</html>
