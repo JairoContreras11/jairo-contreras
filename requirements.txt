@@ -2,6 +2,6 @@ asgiref==3.12.1
 Django==6.1.1
 djangorestframework==3.18.1
 mysqlclient==2.3.0
-python-dotenv==1.2.4
+python-decouple==3.8
 sqlparse==0.6.0
-tzdata>=2024.1
+tzdata==2026.3
